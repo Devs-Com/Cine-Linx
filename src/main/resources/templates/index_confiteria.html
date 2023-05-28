@@ -19,17 +19,17 @@
     <h4 class="text-danger mt-5">Compra confiteria</h4>
 
     <div class="row">
-        <div class="col-md-3 my-5" th:each="producto : ${productos}"
+        <div class="col-md-3 my-5" th:each="producto : ${Productos}"
              th:object="${producto}">
             <a th:href="@{/productos/{id}(id=*{id})}" class="card shadow-lg"
                style="text-decoration: none;">
-                <img th:src="@{/assets/{filename}(filename=*{rutaImagen})}"
+                <img th:src="@{{filename}(filename=*{rutaImagen})}"
                      class="card-img-top"
                      th:alt="*{titulo}">
                 <div class="card-body">
                     <h2 class="card-title fs-6" th:text="*{titulo}"></h2>
                     <p>
-      					S/ <span th:text="${precio}" class="text-muted small"></span>
+      					S/ <span th:text="*{precio}" class="text-muted small"></span>
    					</p>
                 </div>
             </a>
