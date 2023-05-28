@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{master_conf.html}">
+<head>
+	<meta charset="UTF-8">
+	<title>CineLinx | Confiteria</title>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+    <div class="bg-light p-5 rounded">
+        <h1 class="display-1 text-success">Bienvenido a CineLinx</h1>
+        <h2>Disfruta de tus peliculas favoritas al mejor precio.</h2>
+    </div>
+
+    <h4 class="text-danger mt-5">Compra confiteria</h4>
+
+    <div class="row">
+        <div class="col-md-3 my-5" th:each="producto : ${productos}"
+             th:object="${producto}">
+            <a th:href="@{/productos/{id}(id=*{id})}" class="card shadow-lg"
+               style="text-decoration: none;">
+                <img th:src="@{/assets/{filename}(filename=*{rutaImagen})}"
+                     class="card-img-top"
+                     th:alt="*{titulo}">
+                <div class="card-body">
+                    <h2 class="card-title fs-6" th:text="*{titulo}"></h2>
+                    <p>
+      					S/ <span th:text="${precio}" class="text-muted small"></span>
+   					</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
