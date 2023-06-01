@@ -6,9 +6,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Data
@@ -34,6 +35,12 @@ public class Pelicula {
 
     private String rutaPortada;
 
+    @NotEmpty
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "generopelicula",
+    joinColumns = @JoinColumn(name = "idpelicula"),
+    inverseJoinColumns = @JoinColumn(name = "idgenero"))
+    private List<Genero> generos;
 
     @Transient
     private MultipartFile portada;
