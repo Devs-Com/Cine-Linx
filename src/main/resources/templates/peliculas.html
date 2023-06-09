@@ -11,7 +11,22 @@
 
 <div layout:fragment="content">
     <h4>Todas las películas</h4>
-
+    <hr>
+    <h3>Categorias</h3>
+    <div class="container">        
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                Categorías
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li th:field="*{categorias}">
+                    <a class="dropdown-item" th:each="categoria : ${categorias}"
+                    th:value="${categoria.id}"
+                    th:text="${categoria.nombre}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-3 my-5" th:each="pelicula : ${peliculas}"
              th:object="${pelicula}">
