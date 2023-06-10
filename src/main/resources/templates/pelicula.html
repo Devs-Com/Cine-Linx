@@ -38,6 +38,15 @@
                       th:text="${genero.titulo}"></span>
             </div>
             <p th:text="*{sinopsis}"></p>
+            <div th:object="${sala}">
+                <h4 class="text-danger mt-5">Disponible en:</h4>
+                <hr>
+                <h4 class="text-success me-3">Sede <span th:text="*{nombre}"></span></h4>
+                <h5 class="text-primary me-3">Capacidad: <span class="text-secondary" th:text="*{capacidad}"></span></h5>
+                <h5 class="text-primary me-3">Ubicación: <span class="text-secondary" th:text="*{ubicacion}"></span></h5>
+            </div>
+            
+
         </div>
     </div>
 </div>
