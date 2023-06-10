@@ -30,7 +30,7 @@ public class HomeController {
     private PeliculaRepository peliculaRepository;
 
     @Autowired
-    private CategoriaRepository categoriaRepository;
+    private GeneroRepository generoRepository;
 
     @GetMapping("")
     ModelAndView index() {
@@ -46,10 +46,10 @@ public class HomeController {
     ModelAndView listaPeliculas(@PageableDefault(sort = "fechaEstreno", direction = Sort.Direction.DESC)
                                         Pageable pageable) {
         Page<Pelicula> peliculas = peliculaRepository.findAll(pageable);
-        List<Categoria> categorias = categoriaRepository.findAll(Sort.by("nombre"));
+        List<Genero> generos = generoRepository.findAll(Sort.by("titulo"));
         return new ModelAndView("peliculas")
                 .addObject("peliculas", peliculas)
-                .addObject("categorias", categorias);
+                .addObject("generos", generos);
     }
 
     @GetMapping("/peliculas/{id}")
