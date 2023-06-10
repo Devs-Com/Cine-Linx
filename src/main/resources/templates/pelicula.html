@@ -38,14 +38,23 @@
                       th:text="${genero.titulo}"></span>
             </div>
             <p th:text="*{sinopsis}"></p>
-            <div th:object="${sala}">
-                <h4 class="text-danger mt-5">Disponible en:</h4>
-                <hr>
-                <h4 class="text-success me-3">Sede <span th:text="*{nombre}"></span></h4>
-                <h5 class="text-primary me-3">Capacidad: <span class="text-secondary" th:text="*{capacidad}"></span></h5>
-                <h5 class="text-primary me-3">Ubicación: <span class="text-secondary" th:text="*{ubicacion}"></span></h5>
-            </div>
-            
+
+            <h4 class="mt-5">Disponible en:</h4>
+            <hr>
+            <div class="card" style="width: 20rem;" th:object="${sala}">
+                <div class="card-body">
+                  <h5 class="card-title text-danger fw-bold">SEDE <span th:text="*{nombre}"></span></h5>
+                  <p class="card-text text-secondary">Disfruta de las películas más emocionantes y entretenidas desde la comodidad de tu propio automóvil en nuestro moderno Autocine. Sumérgete en una noche mágica bajo las estrellas mientras te deleitas con la última tecnología de proyección y sonido.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item fw-bold">Capacidad: <span class="text-secondary fw-normal" th:text="*{capacidad}"></span></li>
+                  <li class="list-group-item fw-bold">Ubicación: <span class="text-secondary fw-normal" th:text="*{ubicacion}"></li>
+                </ul>
+                <!--<div class="card-body">
+                  <a href="#" class="card-link">Card link</a>
+                  <a href="#" class="card-link">Another link</a>
+                </div>-->
+              </div>
 
         </div>
     </div>
