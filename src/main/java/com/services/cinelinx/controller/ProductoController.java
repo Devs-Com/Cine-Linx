@@ -16,11 +16,11 @@ public class ProductoController {
     private ProductoRepository productoRepository;
 
     @GetMapping("")
-    ModelAndView index_confiteria() {
+    ModelAndView productos() {
         List<Producto> Productos = productoRepository
                 .findAll();
 
-        return new ModelAndView("index_confiteria")
+        return new ModelAndView("productos")
                 .addObject("Productos", Productos);
     }
 }
