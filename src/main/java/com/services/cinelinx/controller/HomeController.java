@@ -16,8 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.services.cinelinx.model.Genero;
 import com.services.cinelinx.model.Pelicula;
+
+import com.services.cinelinx.model.Sala;
 import com.services.cinelinx.repository.GeneroRepository;
+
 import com.services.cinelinx.repository.PeliculaRepository;
+import com.services.cinelinx.repository.SalaRepository;
 
 
 @Controller
@@ -28,7 +32,11 @@ public class HomeController {
     private PeliculaRepository peliculaRepository;
 
     @Autowired
+    private SalaRepository salaRepository;
+  
+    @Autowired
     private GeneroRepository generoRepository;
+
 
     @GetMapping("")
     ModelAndView index() {
@@ -53,7 +61,9 @@ public class HomeController {
     @GetMapping("/peliculas/{id}")
     ModelAndView detallesPelicula(@PathVariable Integer id) {
         Pelicula pelicula = peliculaRepository.getOne(id);
+        Sala sala = salaRepository.getOne(1); 
         return new ModelAndView("pelicula")
-                .addObject("pelicula", pelicula);
+                .addObject("pelicula", pelicula)
+                .addObject("sala", sala);
     }
 }
