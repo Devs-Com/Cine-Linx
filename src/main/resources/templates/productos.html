@@ -21,8 +21,8 @@
 
 
     <div class="row">
-      <div class="col-md-3 my-2" th:each="producto : ${Productos}" th:object="${producto}">
-        <a th:onclick="@{/productos/{id}(id=*{id})}" class="card shadow-lg" style="text-decoration: none;">
+      <div class="col-md-3 my-5" th:each="producto : ${productos}" th:object="${producto}">
+        <a th:href="@{/productos/{id}(id=*{id})}" class="card shadow-lg" style="text-decoration: none;">
           <img th:src="${producto.rutaImagen}" class="card-img-top" th:alt="${producto.titulo}">
           <div class="card-body">
             <h2 class="card-title fs-6" th:text="${producto.titulo}"></h2>
@@ -42,18 +42,17 @@
         </a>
       </div>
 
+      <div class="row mt-5" th:with="page=${productos}">
+        <div class="col-sm-6">
+          <div sd:pagination-summary></div>
+        </div>
+        <div class="col-sm-6">
+          <nav>
+            <ul class="pagination" sd:pagination="full"></ul>
+          </nav>
+        </div>
+      </div>
     </div>
-
-      <!-- <div class="row mt-5" th:with="page=${productos}">
-        <div class="col-sm-6">
-            <div sd:pagination-summary></div>
-        </div>
-        <div class="col-sm-6">
-            <nav>
-                <ul class="pagination" sd:pagination="full"></ul>
-            </nav>
-        </div>
-    </div> -->
 
     <!-- <script>
       $(document).ready(function() {
