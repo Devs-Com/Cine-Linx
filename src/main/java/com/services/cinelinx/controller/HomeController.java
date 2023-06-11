@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.services.cinelinx.model.Genero;
 import com.services.cinelinx.model.Pelicula;
+import com.services.cinelinx.repository.GeneroRepository;
 import com.services.cinelinx.repository.PeliculaRepository;
 
 
@@ -24,6 +26,9 @@ public class HomeController {
     
     @Autowired
     private PeliculaRepository peliculaRepository;
+
+    @Autowired
+    private GeneroRepository generoRepository;
 
     @GetMapping("")
     ModelAndView index() {
@@ -39,8 +44,10 @@ public class HomeController {
     ModelAndView listaPeliculas(@PageableDefault(sort = "fechaEstreno", direction = Sort.Direction.DESC)
                                         Pageable pageable) {
         Page<Pelicula> peliculas = peliculaRepository.findAll(pageable);
+        List<Genero> generos = generoRepository.findAll(Sort.by("titulo"));
         return new ModelAndView("peliculas")
-                .addObject("peliculas", peliculas);
+                .addObject("peliculas", peliculas)
+                .addObject("generos", generos);
     }
 
     @GetMapping("/peliculas/{id}")
