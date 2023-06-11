@@ -57,14 +57,36 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
         crossorigin="anonymous"></script>
-<script
-        src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+  <!-- Script para la funcionalidad del selector de cantidad -->
+  <script>
+    $(document).ready(function() {
+      $(".plus-btn").click(function() {
+        var quantityInput = $(this).closest('.card-body').find('.quantity-input');
+        var quantity = parseInt(quantityInput.val());
+        quantity += 1;
+        quantityInput.val(quantity);
+      });
+  
+      $(".minus-btn").click(function() {
+        var quantityInput = $(this).closest('.card-body').find('.quantity-input');
+        var quantity = parseInt(quantityInput.val());
+        if (quantity > 1) {
+          quantity -= 1;
+          quantityInput.val(quantity);
+        }
+      });
+    });
+  </script>
+
 <script>
     $(document).ready(function() {
         $('.select2').select2();
     });
 </script>
+
 
 <div layout:fragment="scripts" th:remove="tag"></div>
 </body>
