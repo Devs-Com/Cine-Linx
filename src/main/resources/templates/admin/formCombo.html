@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<div th:fragment="formCombo">
+    <form action="" method="post" th:object="${combo}" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <input id="titulo" type="text" placeholder="Título" class="form-control"
+                   th:field="*{titulo}">
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('titulo')}"
+                 th:errors="*{titulo}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="precio" class="form-label">Precio</label>
+            <input id="precio" type="text" placeholder="Precio" class="form-control"
+                   th:field="*{precio}">
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('precio')}"
+                 th:errors="*{precio}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <input id="descripcion" type="text" placeholder="Descripción" class="form-control"
+                   th:field="*{descripcion}">
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('descripcion')}"
+                 th:errors="*{descripcion}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="rutaImagen" class="form-label">Ruta de la imagen</label>
+            <input id="rutaImagen" type="text" placeholder="Ruta de la imagen" class="form-control"
+                   th:field="*{rutaImagen}">
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('rutaImagen')}"
+                 th:errors="*{rutaImagen}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="categorias" class="form-label">Categoría</label>
+            <select id="categorias" class="form-control select2"
+                    th:field="*{categorias}" multiple>
+                <option th:each="categoria : ${categorias}"
+                        th:value="${categoria.id}"
+                        th:text="${categoria.nombre}"></option>
+            </select>
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('categorias')}"
+                 th:errors="*{categorias}"></div>
+        </div>
+
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
