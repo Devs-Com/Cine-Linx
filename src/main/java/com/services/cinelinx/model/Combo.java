@@ -1,7 +1,6 @@
 package com.services.cinelinx.model;
 
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
 import java.math.BigDecimal;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -9,10 +8,11 @@ import javax.validation.constraints.NotNull;
 
 @Data 
 @Entity
-public class Producto {
+@Table (name = "combos")
+public class Combo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idproducto")
+    @Column(name = "id_combo")
     private Integer id;
 
     @NotBlank
@@ -22,8 +22,12 @@ public class Producto {
     private BigDecimal precio;
 
     @NotBlank
+    private String descripcion;
+
+    @NotBlank
     private String rutaImagen;
 
-    @Transient
-    private MultipartFile imagen;
+    @ManyToOne
+    @JoinColumn(name = "id_categoria")
+    private Categoria categorias;
 } 
