@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+  layout:decorate="~{master.html}">
+
+<head>
+  <meta charset="UTF-8">
+  <title>CineLinx | Confiteria </title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <div layout:fragment="content">
+
+    <h4 class="text-danger mt-5">Compra combos</h4>
+
+    <div class="btn-group btn-group-horizontal" role="group">
+      <button type="button" class="btn">SALADO</button>
+      <button type="button" class="btn">DULCE</button>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-3 my-3" th:each="combo : ${combos}" th:object="${combo}">
+        <a href="#" class="card shadow-lg" style="text-decoration: none;">
+          <img th:src="${combo.rutaImagen}" class="card-img-top" th:alt="${combo.titulo}" data-bs-toggle="modal" th:data-bs-target="'#modal-' + ${combo.id}">
+          <div class="card-body">
+            <h2 class="card-title fs-6 open-modal" th:text="${combo.titulo}" data-bs-toggle="modal" th:data-bs-target="'#modal-' + ${combo.id}"></h2>
+            <p>S/ <span class="text-muted small" th:text="${combo.precio}" data-bs-toggle="modal" th:data-bs-target="'#modal-' + ${combo.id}"></span></p>
+
+            <!-- Selector de cantidad visual -->
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary minus-btn" type="button">-</button>
+              </div>
+              <input type="text" class="form-control text-center quantity-input" value="1" readonly>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary plus-btn" type="button">+</button>
+              </div>
+            </div>
+          </div>
+        </a>
+        
+        <!-- Modal -->
+        <div class="modal fade" th:id="'modal-' + ${combo.id}" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <img th:src="${combo.rutaImagen}" class="img-fluid w-100" th:alt="${combo.titulo}">
+                  </div>
+                  <div class="col-md-6 d-flex flex-column justify-content-between">
+                    <div>
+                      <h5 class="modal-title" th:text="${combo.titulo}"></h5>
+                      <p class="mt-3" th:text="${combo.descripcion}"></p>
+                      <p class="mt-3">Precio: S/ <span th:text="${combo.precio}"></span></p>
+                    </div>
+                    <div class="text-end">
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Agregar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-5" th:with="page=${combos}">
+        <div class="col-sm-6">
+          <div sd:pagination-summary></div>
+        </div>
+        <div class="col-sm-6">
+          <nav>
+            <ul class="pagination" sd:pagination="full"></ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function() {
+        $(".plus-btn").click(function() {
+          var quantityInput = $(this).closest('.card-body').find('.quantity-input');
+          var quantity = parseInt(quantityInput.val());
+          if (quantity < 10) { 
+          quantity += 1;
+          quantityInput.val(quantity);
+          }
+        });
+    
+        $(".minus-btn").click(function() {
+          var quantityInput = $(this).closest('.card-body').find('.quantity-input');
+          var quantity = parseInt(quantityInput.val());
+          if (quantity > 1) {
+            quantity -= 1;
+            quantityInput.val(quantity);
+          }
+        });
+
+        $(".open-modal").click(function(e) {
+          e.stopPropagation();
+        });
+      });
+    </script>
+
+  </div>
+
+</body>
+
+</html>
