@@ -6,12 +6,21 @@
 <head>
     <meta charset="UTF-8">
     <title>CineLinx | Administrar películas</title>
+    <style>
+        .navbar-brand {
+            color: inherit;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 
 <div layout:fragment="content">
-    <h2>Películas</h2>
-
+    <div class="container-fluid">
+        <a class="navbar-brand font-weight-bold" href="#">Películas</a>
+        <a class="navbar-brand font-weight-bold" href="admin/combos">Confitería</a>
+    </div>
+    
     <div class="text-end">
         <a href="/admin/peliculas/nuevo" class="btn btn-primary mb-3">
             Nueva película
