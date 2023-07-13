@@ -1,6 +1,5 @@
 package com.services.cinelinx.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,7 +45,7 @@ public class AdminController {
 
     @GetMapping("/peliculas/nuevo")
     ModelAndView nuevaPelicula() {
-        List<Genero> generos = generoRepository.findAll(Sort.by("titulo"));
+        List<Genero> generos = generoRepository.findAll(Sort.by("nombre"));
 
         return new ModelAndView("admin/nueva-pelicula")
                 .addObject("pelicula", new Pelicula())
@@ -60,7 +59,7 @@ public class AdminController {
                 bindingResult.rejectValue("portada", "MultipartNotEmpty");
             }
 
-            List<Genero> generos = generoRepository.findAll(Sort.by("titulo"));
+            List<Genero> generos = generoRepository.findAll(Sort.by("nombre"));
 
             return new ModelAndView("admin/nueva-pelicula")
                     .addObject("pelicula", pelicula)
@@ -76,7 +75,7 @@ public class AdminController {
     @GetMapping("/peliculas/{id}/editar")
     ModelAndView editarPelicula(@PathVariable Integer id) {
         Pelicula pelicula = peliculaRepository.getOne(id);
-        List<Genero> generos = generoRepository.findAll(Sort.by("titulo"));
+        List<Genero> generos = generoRepository.findAll(Sort.by("nombre"));
 
         return new ModelAndView("admin/editar-pelicula")
                 .addObject("pelicula", pelicula)
@@ -85,9 +84,9 @@ public class AdminController {
 
     @PostMapping("/peliculas/{id}/editar")
     ModelAndView actualizarPelicula(@PathVariable Integer id,
-                                    @Validated Pelicula pelicula, BindingResult bindingResult) {
+            @Validated Pelicula pelicula, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            List<Genero> generos = generoRepository.findAll(Sort.by("titulo"));
+            List<Genero> generos = generoRepository.findAll(Sort.by("nombre"));
             return new ModelAndView("admin/editar-pelicula")
                     .addObject("pelicula", pelicula)
                     .addObject("generos", generos);
@@ -96,8 +95,8 @@ public class AdminController {
         peliculaFromDb.setTitulo(pelicula.getTitulo());
         peliculaFromDb.setSinopsis(pelicula.getSinopsis());
         peliculaFromDb.setFechaEstreno(pelicula.getFechaEstreno());
-        peliculaFromDb.setYoutubeTrailerId(pelicula.getYoutubeTrailerId());
-        peliculaFromDb.setGeneros(pelicula.getGeneros());
+        peliculaFromDb.setTrailer(pelicula.getTrailer());
+        peliculaFromDb.setGenero(pelicula.getGenero());
 
         if (!pelicula.getPortada().isEmpty()) {
             fileSystemStorageService.delete(peliculaFromDb.getRutaPortada());

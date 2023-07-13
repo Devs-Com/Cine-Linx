@@ -23,47 +23,45 @@ import com.services.cinelinx.repository.GeneroRepository;
 import com.services.cinelinx.repository.PeliculaRepository;
 import com.services.cinelinx.repository.SalaRepository;
 
-
 @Controller
 @RequestMapping("")
 public class HomeController {
-    
-    @Autowired
-    private PeliculaRepository peliculaRepository;
 
-    @Autowired
-    private SalaRepository salaRepository;
-  
-    @Autowired
-    private GeneroRepository generoRepository;
+        @Autowired
+        private PeliculaRepository peliculaRepository;
 
+        @Autowired
+        private SalaRepository salaRepository;
 
-    @GetMapping("")
-    ModelAndView index() {
-        List<Pelicula> ultimasPeliculas = peliculaRepository
-                .findAll(PageRequest.of(0, 4, Sort.by("fechaEstreno").descending()))
-                .toList();
+        @Autowired
+        private GeneroRepository generoRepository;
 
-        return new ModelAndView("index")
-                .addObject("ultimasPeliculas", ultimasPeliculas);
-    }
+        @GetMapping("")
+        ModelAndView index() {
+                List<Pelicula> ultimasPeliculas = peliculaRepository
+                                .findAll(PageRequest.of(0, 4, Sort.by("fechaEstreno").descending()))
+                                .toList();
 
-    @GetMapping("/peliculas")
-    ModelAndView listaPeliculas(@PageableDefault(sort = "fechaEstreno", direction = Sort.Direction.DESC)
-                                        Pageable pageable) {
-        Page<Pelicula> peliculas = peliculaRepository.findAll(pageable);
-        List<Genero> generos = generoRepository.findAll(Sort.by("titulo"));
-        return new ModelAndView("peliculas")
-                .addObject("peliculas", peliculas)
-                .addObject("generos", generos);
-    }
+                return new ModelAndView("index")
+                                .addObject("ultimasPeliculas", ultimasPeliculas);
+        }
 
-    @GetMapping("/peliculas/{id}")
-    ModelAndView detallesPelicula(@PathVariable Integer id) {
-        Pelicula pelicula = peliculaRepository.getOne(id);
-        Sala sala = salaRepository.getOne(1); 
-        return new ModelAndView("pelicula")
-                .addObject("pelicula", pelicula)
-                .addObject("sala", sala);
-    }
+        @GetMapping("/peliculas")
+        ModelAndView listaPeliculas(
+                        @PageableDefault(sort = "fechaEstreno", direction = Sort.Direction.DESC) Pageable pageable) {
+                Page<Pelicula> peliculas = peliculaRepository.findAll(pageable);
+                List<Genero> generos = generoRepository.findAll(Sort.by("nombre"));
+                return new ModelAndView("peliculas")
+                                .addObject("peliculas", peliculas)
+                                .addObject("generos", generos);
+        }
+
+        @GetMapping("/peliculas/{id}")
+        ModelAndView detallesPelicula(@PathVariable Integer id) {
+                Pelicula pelicula = peliculaRepository.getOne(id);
+                Sala sala = salaRepository.getOne(1);
+                return new ModelAndView("pelicula")
+                                .addObject("pelicula", pelicula)
+                                .addObject("sala", sala);
+        }
 }
