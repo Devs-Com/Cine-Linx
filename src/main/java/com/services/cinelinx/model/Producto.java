@@ -1,29 +1,31 @@
 package com.services.cinelinx.model;
 
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
 import java.math.BigDecimal;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Data 
+@Data
 @Entity
+@Table(name = "productos")
 public class Producto {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idproducto")
-    private Integer id;
+    @Column(name = "idProducto", columnDefinition = "INT(11)")
+    private Integer idProducto;
 
     @NotBlank
-    private String titulo;
+    private String nombre;
 
     @NotNull
     private BigDecimal precio;
 
     @NotBlank
-    private String rutaImagen;
+    private String descripcion;
 
-    @Transient
-    private MultipartFile imagen;
-} 
+    @ManyToOne
+    @JoinColumn(name = "idCategoria")
+    private Categoria categoria;
+}
