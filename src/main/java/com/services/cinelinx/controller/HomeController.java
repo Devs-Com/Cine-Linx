@@ -26,7 +26,7 @@ import com.services.cinelinx.repository.PeliculaRepository;
 import com.services.cinelinx.repository.SalaRepository;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/")
 public class HomeController {
 
         @Autowired
