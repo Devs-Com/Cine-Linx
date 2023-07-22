@@ -1,8 +1,9 @@
 package com.services.cinelinx.model;
 
-import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
+
+import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,14 +12,15 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
-
 @Data
 @Entity
+@Table(name = "peliculas")
 public class Pelicula {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idpelicula")
-    private Integer id;
+    @Column(name = "idPelicula", columnDefinition = "INT(11)")
+    private Integer idPelicula;
 
     @NotBlank
     private String titulo;
@@ -31,16 +33,14 @@ public class Pelicula {
     private LocalDate fechaEstreno;
 
     @NotBlank
-    private String youtubeTrailerId;
+    private String trailer;
 
     private String rutaPortada;
 
     @NotEmpty
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "generopelicula",
-    joinColumns = @JoinColumn(name = "idpelicula"),
-    inverseJoinColumns = @JoinColumn(name = "idgenero"))
-    private List<Genero> generos;
+    @JoinTable(name = "generos", joinColumns = @JoinColumn(name = "idGenero"), inverseJoinColumns = @JoinColumn(name = "nombre"))
+    private List<Genero> genero;
 
     @Transient
     private MultipartFile portada;

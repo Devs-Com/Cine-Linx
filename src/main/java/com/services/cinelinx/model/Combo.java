@@ -6,17 +6,18 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Data 
+@Data
 @Entity
-@Table (name = "combos")
-public class Combo {
+@Table(name = "productos")
+public class Producto {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_combo")
-    private Integer id;
+    @Column(name = "idProducto", columnDefinition = "INT(11)")
+    private Integer idProducto;
 
     @NotBlank
-    private String titulo;
+    private String nombre;
 
     @NotNull
     private BigDecimal precio;
@@ -24,10 +25,7 @@ public class Combo {
     @NotBlank
     private String descripcion;
 
-    @NotBlank
-    private String rutaImagen;
-
     @ManyToOne
-    @JoinColumn(name = "id_categoria")
-    private Categoria categorias;
-} 
+    @JoinColumn(name = "idCategoria")
+    private Categoria categoria;
+}
