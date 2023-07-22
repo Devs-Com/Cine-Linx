@@ -13,7 +13,7 @@ public class CineLinxApplication {
 	}
 
 	@Bean
-    public SpringDataDialect springDataDialect() {
-        return new SpringDataDialect();
+	public SpringDataDialect springDataDialect() {
+		return new SpringDataDialect();
 	}
 }
