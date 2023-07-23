@@ -35,9 +35,6 @@ public class HomeController {
         @Autowired
         private SalaRepository salaRepository;
 
-        @Autowired
-        private GeneroRepository generoRepository;
-
         @GetMapping("")
         ModelAndView index() {
                 List<Pelicula> ultimasPeliculas = peliculaRepository
@@ -49,28 +46,11 @@ public class HomeController {
         }
 
         @GetMapping("/peliculas")
-        ModelAndView listaPeliculas(@RequestParam(value = "generoSeleccionado", required = false) Integer idGenero,
+        ModelAndView listaPeliculas(
                         @PageableDefault(sort = "fechaEstreno", direction = Sort.Direction.DESC) Pageable pageable) {
-                Page<Pelicula> peliculas;
-                List<Genero> generos = generoRepository.findAll(Sort.by("nombre"));
-
-                if (idGenero != null) {
-                        Optional<Genero> generoOptional = generoRepository.findById(idGenero);
-                        if (generoOptional.isPresent()) {
-                                Genero genero = generoOptional.get();
-                                peliculas = peliculaRepository.findByGeneroIdGenero(idGenero, pageable);
-                        } else {
-                                // Manejo de error si el género no existe
-                                // Por ejemplo, redirigir a una página de error
-                                return new ModelAndView("error");
-                        }
-                } else {
-                        peliculas = peliculaRepository.findAll(pageable);
-                }
-
+                Page<Pelicula> peliculas = peliculaRepository.findAll(pageable);
                 return new ModelAndView("peliculas")
-                                .addObject("peliculas", peliculas)
-                                .addObject("generos", generos);
+                                .addObject("peliculas", peliculas);
         }
 
         @GetMapping("/peliculas/{id}")
