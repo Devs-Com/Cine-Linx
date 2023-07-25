@@ -1,8 +1,6 @@
 package com.services.cinelinx.controller;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,15 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.services.cinelinx.model.Genero;
 import com.services.cinelinx.model.Pelicula;
 
 import com.services.cinelinx.model.Sala;
-import com.services.cinelinx.repository.GeneroRepository;
-
 import com.services.cinelinx.repository.PeliculaRepository;
 import com.services.cinelinx.repository.SalaRepository;
 
@@ -35,9 +29,6 @@ public class HomeController {
         @Autowired
         private SalaRepository salaRepository;
 
-        @Autowired
-        private GeneroRepository generoRepository;
-
         @GetMapping("")
         ModelAndView index() {
                 List<Pelicula> ultimasPeliculas = peliculaRepository
@@ -49,28 +40,11 @@ public class HomeController {
         }
 
         @GetMapping("/peliculas")
-        ModelAndView listaPeliculas(@RequestParam(value = "generoSeleccionado", required = false) Integer idGenero,
+        ModelAndView listaPeliculas(
                         @PageableDefault(sort = "fechaEstreno", direction = Sort.Direction.DESC) Pageable pageable) {
-                Page<Pelicula> peliculas;
-                List<Genero> generos = generoRepository.findAll(Sort.by("nombre"));
-
-                if (idGenero != null) {
-                        Optional<Genero> generoOptional = generoRepository.findById(idGenero);
-                        if (generoOptional.isPresent()) {
-                                Genero genero = generoOptional.get();
-                                peliculas = peliculaRepository.findByGeneroIdGenero(idGenero, pageable);
-                        } else {
-                                // Manejo de error si el género no existe
-                                // Por ejemplo, redirigir a una página de error
-                                return new ModelAndView("error");
-                        }
-                } else {
-                        peliculas = peliculaRepository.findAll(pageable);
-                }
-
+                Page<Pelicula> peliculas = peliculaRepository.findAll(pageable);
                 return new ModelAndView("peliculas")
-                                .addObject("peliculas", peliculas)
-                                .addObject("generos", generos);
+                                .addObject("peliculas", peliculas);
         }
 
         @GetMapping("/peliculas/{id}")

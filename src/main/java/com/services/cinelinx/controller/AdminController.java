@@ -52,6 +52,11 @@ public class AdminController {
                 .addObject("generos", generos);
     }
 
+    /*
+     * TODO: Corregir el envio del idPelicula que se envia a la tabla Generos
+     * columna idGenero. Ademas que
+     * capture el idGenero en la tabla de peliculas columna idGenero.
+     */
     @PostMapping("/peliculas/nuevo")
     ModelAndView crearPelicula(@Validated Pelicula pelicula, BindingResult bindingResult) {
         if (bindingResult.hasErrors() || pelicula.getPortada().isEmpty()) {
@@ -87,6 +92,7 @@ public class AdminController {
             @Validated Pelicula pelicula, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<Genero> generos = generoRepository.findAll(Sort.by("nombre"));
+
             return new ModelAndView("admin/editar-pelicula")
                     .addObject("pelicula", pelicula)
                     .addObject("generos", generos);
