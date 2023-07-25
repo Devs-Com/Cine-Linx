@@ -25,8 +25,8 @@
     <div class="row">
       <div class="col-md-3 my-3" th:each="producto : ${productos}" th:object="${producto}">
         <a href="#" class="card shadow-lg" style="text-decoration: none;">
-          <!-- <img th:src="${producto.rutaImagen}" class="card-img-top" th:alt="${producto.nombre}" data-bs-toggle="modal"
-            th:data-bs-target="'#modal-' + ${producto.idProducto}"> -->
+          <img th:src="@{/assets/{filename}(filename=*{rutaImagen})}" class="card-img-top" th:alt="${nombre}"
+            data-bs-toggle="modal" th:data-bs-target="'#modal-' + ${producto.idProducto}">
           <div class="card-body">
             <h2 class="card-title fs-6 open-modal" th:text="${producto.nombre}" data-bs-toggle="modal"
               th:data-bs-target="'#modal-' + ${producto.idProducto}"></h2>
