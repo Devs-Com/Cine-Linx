@@ -52,6 +52,11 @@ public class AdminProductosController {
                 .addObject("categorias", categorias);
     }
 
+    /*
+     * TODO: Corregir el envio del idProducto que se envia a la tabla Categorias
+     * columna idCategoria. Ademas que
+     * capture el idCategoria en la tabla de productos columna idCatagoria.
+     */
     @PostMapping("/nuevo")
     ModelAndView crearProducto(@Validated Producto producto, BindingResult bindingResult) {
         if (bindingResult.hasErrors() || producto.getImagen().isEmpty()) {
