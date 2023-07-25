@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="es"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{master.html}">
+<html lang="es" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+    layout:decorate="~{master.html}">
+
 <head>
     <meta charset="UTF-8">
-    <title>CineLinx | Administrar combos</title>
+    <title>CineLinx | Administrar productos</title>
     <style>
         .navbar-brand {
             color: inherit;
@@ -13,85 +12,85 @@
         }
     </style>
 </head>
+
 <body>
 
-<div layout:fragment="content">
-    
-    <div class="container-fluid">
-        <a class="navbar-brand font-weight-bold" href="/admin">Películas</a>
-        <a class="navbar-brand font-weight-bold" href="/admin/combos">Confitería</a>
-    </div>
+    <div layout:fragment="content">
 
-
-    <div class="text-end">
-        <a href="/admin/combos/nuevo" class="btn btn-primary mb-3">
-            Nuevo combo
-        </a>
-    </div>
-
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th></th>
-            <th>Combo</th>
-            <th>Precio</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="combo : ${combos}" th:object="${combo}">
-            <td>
-                <img th:src="${combo.rutaImagen}" style="width: 135px">
-            </td>
-            
-            <td>
-                <div th:text="*{titulo}" class="fs-5 fw-bold"></div>
-                <p th:text="*{descripcion}"></p>
-                <div>
-                    <span class="badge rounded-pill bg-light text-dark me-1"
-                          th:each="categoria : *{categorias}"
-                          th:text="${categoria.nombre}"></span>
-                </div>
-            </td>
-
-            <td>
-                <p th:text="*{precio}"></p>
-            </td>
-            
-            <td class="text-end">
-                <a th:href="@{/admin/combos/{id}/editar(id=*{id})}">Editar</a>
-                <a href="javascript:void(0)" class="text-danger ms-3"
-                   th:onclick="'eliminarCombo(' + *{id} + ')'">Eliminar</a>
-                <form th:id="'eliminarComboForm' + *{id}"
-                      th:action="@{/admin/combos/{id}/eliminar(id=*{id})}"
-                      method="post"
-                      class="d-none"></form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-    <div class="row mt-5" th:with="page=${combos}">
-        <div class="col-sm-6">
-          <div sd:pagination-summary></div>
+        <div class="container-fluid">
+            <a class="navbar-brand font-weight-bold" href="/admin">Películas</a>
+            <a class="navbar-brand font-weight-bold" href="/admin/productos">Confitería</a>
         </div>
-        <div class="col-sm-6">
-          <nav>
-            <ul class="pagination" sd:pagination="full"></ul>
-          </nav>
+
+
+        <div class="text-end">
+            <a href="/admin/productos/nuevo" class="btn btn-primary mb-3">
+                Nuevo producto
+            </a>
+        </div>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="producto : ${productos}" th:object="${producto}">
+                    <td style="width: 150px;">
+                        <a th:href="@{/assets/{filename}(filename=*{rutaImagen})}" data-fancybox>
+                            <img th:src="@{/assets/{filename}(filename=*{rutaImagen})}" alt=""
+                                class="img-thumbnail w-100">
+                        </a>
+                    </td>
+                    <td>
+                        <div th:text="*{nombre}" class="fs-5 fw-bold"></div>
+                        <p th:text="*{descripcion}"></p>
+                        <div>
+                            <span class="badge rounded-pill bg-light text-dark me-1" th:each="categoria : *{categoria}"
+                                th:text="${categoria.titulo}"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <p th:text="*{precio}"></p>
+                    </td>
+                    <td class="text-end">
+                        <a th:href="@{/admin/productos/{idProducto}/editar(idProducto=*{idProducto})}">Editar</a>
+                        <a href="javascript:void(0)" class="text-danger ms-3"
+                            th:onclick="'eliminarProducto(' + *{idProducto} + ')'">Eliminar</a>
+                        <form th:id="'eliminarProductoForm' + *{idProducto}"
+                            th:action="@{/admin/productos/{idProducto}/eliminar(idProducto=*{idProducto})}"
+                            method="post" class="d-none"></form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="row mt-5" th:with="page=${productos}">
+            <div class="col-sm-6">
+                <div sd:pagination-summary></div>
+            </div>
+            <div class="col-sm-6">
+                <nav>
+                    <ul class="pagination" sd:pagination="full"></ul>
+                </nav>
+            </div>
         </div>
     </div>
-</div>
 
-<div layout:fragment="scripts">
-    <script>
-        function eliminarCombo(id) {
-            if (!confirm('¿Está seguro de eliminar este combo?')) {
-                return;
+    <div layout:fragment="scripts">
+        <script>
+            function eliminarProducto(id) {
+                if (!confirm('¿Está seguro de eliminar este producto?')) {
+                    return;
+                }
+                $('#eliminarProductoForm' + id).submit();
             }
-            $('#eliminarComboForm' + id).submit();
-        }
-    </script>
-</div>
+        </script>
+    </div>
 </body>
+
 </html>
