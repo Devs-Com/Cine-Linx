@@ -15,18 +15,21 @@
 
 <body>
 
-    <div layout:fragment="content">
-        <div class="container-fluid">
-            <a class="navbar-brand font-weight-bold" href="admin">Películas</a>
-            <a class="navbar-brand font-weight-bold" href="admin/productos">Confitería</a>
-        </div>
-
-        <div class="text-end">
-            <a href="/admin/peliculas/nuevo" class="btn btn-primary mb-3">
-                Nueva película
-            </a>
-        </div>
-
+<div layout:fragment="content">
+    <div class="container-fluid">
+        <a class="navbar-brand font-weight-bold" href="admin">Películas</a>
+        <a class="navbar-brand font-weight-bold" href="admin/productos">Confitería</a>
+    </div>
+    <div class="text-end">
+        <button sec:authorize="isAuthenticated()" class="btn btn-primary mb-3">
+            <a th:href="@{/logout}" style="color: white; text-decoration: none;">Cerrar Sesión</a>
+        </button>
+    </div>
+    <div class="text-end">
+        <a href="/admin/peliculas/nuevo" class="btn btn-primary mb-3">
+            Nueva película
+        </a>
+    </div>
         <table class="table table-hover">
             <thead>
                 <tr>
