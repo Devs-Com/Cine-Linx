@@ -2,9 +2,14 @@ package com.services.cinelinx.model;
 
 import lombok.Data;
 import java.math.BigDecimal;
+import java.util.List;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Entity
@@ -25,7 +30,13 @@ public class Producto {
     @NotBlank
     private String descripcion;
 
-    @ManyToOne
-    @JoinColumn(name = "idCategoria")
-    private Categoria categoria;
+    private String rutaImagen;
+
+    @NotEmpty
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "categorias", joinColumns = @JoinColumn(name = "idCategoria"), inverseJoinColumns = @JoinColumn(name = "titulo"))
+    private List<Categoria> categoria;
+
+    @Transient
+    private MultipartFile imagen;
 }

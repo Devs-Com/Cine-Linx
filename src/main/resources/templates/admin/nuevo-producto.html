@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+    layout:decorate="~{master.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CineLinx | Nuevo producto</title>
+</head>
+
+<body>
+
+    <div layout:fragment="content">
+        <h2>Nuevo producto</h2>
+
+        <div th:insert="admin/_form-producto :: form-producto"></div>
+    </div>
+</body>
+
+</html>
